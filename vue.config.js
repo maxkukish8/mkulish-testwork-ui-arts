@@ -15,4 +15,5 @@ module.exports = defineConfig({
       },
     },
   },
+  publicPath: "/mkulish-testwork-ui-arts/",
 });
