@@ -32,23 +32,30 @@ const saveCartToLocalStorage = () => {
 
 // Loading the cart from localStorage on startup
 onMounted(() => {
-  const savedCart = localStorage.getItem("cart");
-  if (savedCart) {
-    cart.value = JSON.parse(savedCart);
+  try {
+    const savedCart = localStorage.getItem("cart");
+    if (savedCart) {
+      const parsed = JSON.parse(savedCart);
+      cart.value = Array.isArray(parsed) ? parsed : [];
+    }
+  } catch (e) {
+    cart.value = [];
   }
 });
 
 // Adding a product to the cart based on quantity
 const addToCart = (productWithQty) => {
-  const existingItem = cart.value.find((item) => item.id === productWithQty.id);
+  const existingItem = Array.isArray(cart.value)
+    ? cart.value.find((item) => item.id === productWithQty.id)
+    : null;
+
   if (existingItem) {
     existingItem.quantity += productWithQty.quantity;
   } else {
     cart.value.push({ ...productWithQty });
   }
-  saveCartToLocalStorage();
 
-  //Show madal window
+  saveCartToLocalStorage();
   showModal.value = true;
   setTimeout(() => {
     showModal.value = false;
