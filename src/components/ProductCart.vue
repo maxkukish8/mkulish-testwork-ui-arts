@@ -67,7 +67,8 @@ const getItemPrice = (item) => {
 
 // Calculating the total amount, using props.cart
 const totalAmount = computed(() => {
-  return props.cart.reduce((total, item) => total + getItemPrice(item), 0);
+  const cart = Array.isArray(props.cart) ? props.cart : [];
+  return cart.reduce((total, item) => total + getItemPrice(item), 0);
 });
 </script>
 

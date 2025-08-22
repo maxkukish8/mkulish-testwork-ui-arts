@@ -15,5 +15,6 @@ module.exports = defineConfig({
       },
     },
   },
-  publicPath: "/mkulish-testwork-ui-arts/",
+  publicPath:
+    process.env.NODE_ENV === "production" ? "/mkulish-testwork-ui-arts/" : "/",
 });
